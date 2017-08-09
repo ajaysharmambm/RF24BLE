@@ -151,15 +151,16 @@ void RF24BLE::setName(char* name){
 }
 
 void RF24BLE::setData(const void* data,uint8_t dataLen){
-
+	
+	_length = 0;
 	const uint8_t* current = reinterpret_cast<const uint8_t*>(data);
 	//8,9,10 bytes are for flags 
 	//name field starts from 11th byte
 #if DEBUG
 	Serial.print("data "); Serial.println(dataLen);
 #endif
-	_packet[_length++] = dataLen +1;
-	_packet[_length++] = 0xFF;//data type
+// 	_packet[_length++] = dataLen +1;
+// 	_packet[_length++] = 0xFF;//data type
 	for (uint8_t i = 0; i < dataLen; i++){
 		//Serial.print(*current);
 		_packet[_length++] = *(current);
@@ -168,9 +169,9 @@ void RF24BLE::setData(const void* data,uint8_t dataLen){
 	}
 	//CRC is appended to the data
 	//CRC starting val 0x555555 acc. to spec
-	_packet[_length++] = 0x55;
-	_packet[_length++] = 0x55;
-	_packet[_length++] = 0x55;
+// 	_packet[_length++] = 0x55;
+// 	_packet[_length++] = 0x55;
+// 	_packet[_length++] = 0x55;
 }
 
 void RF24BLE::sendADV(uint8_t channel){
